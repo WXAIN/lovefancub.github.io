@@ -1,0 +1,495 @@
+HTML
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สุขสันต์วันเกิดนะ ที่รัก!</title>
+    <style>
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&family=Pacifico&display=swap');
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- Page Control --- */
+        .page {
+            display: none; /* ซ่อนทุกหน้าไว้ก่อน */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            z-index: 10;
+        }
+        
+        .page.active {
+            display: flex;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- Page 1: Start --- */
+        #page1 h1 {
+            font-size: 3rem;
+            text-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        .pulsing-heart {
+            font-size: 100px;
+            cursor: pointer;
+            animation: pulse 1.5s infinite;
+            transition: transform 0.3s ease;
+        }
+        .pulsing-heart:hover {
+            transform: scale(1.2);
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        #page1 p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        /* --- Page 2: Card --- */
+        .glow-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 5rem;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow:
+                0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff,
+                0 0 40px #ff00de, 0 0 70px #ff00de;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #e60073; }
+            to { text-shadow: 0 0 20px #fff, 0 0 40px #ff4da6; }
+        }
+        
+        .flip-card {
+            background-color: transparent;
+            width: 350px;
+            height: 450px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .flip-card.active .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .flip-card-front {
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        .flip-card-front h2 {
+            font-size: 2rem;
+            color: #e73c7e;
+            margin: 0;
+        }
+        .flip-card-front p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-top: 10px;
+        }
+        .cake-icon { font-size: 100px; }
+        
+        .flip-card-back {
+            background: #fff;
+            color: #333;
+            transform: rotateY(180deg);
+            padding: 30px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .flip-card-back img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+        .flip-card-back .message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: left;
+            flex-grow: 1;
+            /* เพิ่มให้ scroll ได้ถ้าข้อความยาว */
+            overflow-y: auto; 
+        }
+        .flip-card-back .signature {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e73c7e;
+            margin-top: 15px;
+            align-self: flex-end;
+        }
+        
+        .next-button {
+            margin-top: 25px;
+            padding: 12px 30px;
+            font-family: 'Kanit', sans-serif;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #e73c7e;
+            background: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .next-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        /* --- Page 3: Finale --- */
+        .final-message {
+            font-size: 6rem;
+            color: #fff;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+            animation: fadeIn 2s;
+        }
+
+        /* --- Canvas for Fireworks --- */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* --- Falling Hearts --- */
+        #hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            top: -10vh;
+            font-size: 1.5rem;
+            color: red;
+            opacity: 0.7;
+            animation: fall 5s linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(0vh) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="fireworks-canvas"></canvas>
+    
+    <div id="hearts-container"></div>
+
+    <div class="page active" id="page1">
+        <h1> 26 ตุลามาบรรจบ </h1>
+        <div id="start-button" class="pulsing-heart">❤️</div>
+        <p>(แตะที่หัวใจสิ)</p>
+    </div>
+
+    <div class="page" id="page2">
+        <h1 class="glow-title">Happy Birthday</h1>
+
+        <div class="flip-card" id="birthdayCard">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="cake-icon">🎂</div>
+                    
+                    <h2>เรียน คุณกัญณิกา </h2> <p>(แตะการ์ดเพื่อเปิดอ่าน 💖)</p>
+                </div>
+                
+                <div class="flip-card-back">
+                    
+                    <img src="https://i.postimg.cc/FKL2w55f/S-24018958.jpg" alt="Our Photo">
+                    <p class="message">
+                        แปปเดียวคนสวยของวินก็โตขึ้นอีกแล้ว วิน proud ในตัวมุกมากๆนะสำหรับวินยูเป็นคนที่เก่งมากเลยและสวยมากๆมาโดยตลอดจนถึงปัจุบันก็ ปีนี้คงขอให้มุกร่างกายแข็งแรง เป็นที่รักของทุกคนยิ้มเยอะๆเรื่องไหนเครียดก็วางลงหน่อยสิวจะได้หาย มีคนเอ็นดูเยอะๆสุดท้ายถ้าเรื่องไหนเครียดหรือไม่ไหวอย่าลืมว่าหลังยูจะมีไอ1ก้าวเสมอ
+                    </p>
+                    <p class="signature">รักอ้วน,<br>วิน</p> </div>
+            </div>
+        </div>
+        
+        <button id="next-button" class="next-button">มีอีกนะ...</button>
+    </div>
+
+    <div class="page" id="page3">
+        <h1 class="final-message">รักที่สุดใน3ล้านโลก ❤️</h1>
+    </div>
+
+
+    <script>
+        // --- ระบบนำทาง (Navigation) ---
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        const page3 = document.getElementById('page3');
+        const heartsContainer = document.getElementById('hearts-container');
+        var fireworksLoop; // สร้างตัวแปรไว้เก็บ loop
+        var heartsInterval; // สร้างตัวแปรไว้เก็บ interval
+
+        // ฟังก์ชันสำหรับเปลี่ยนหน้า
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // ปุ่มเริ่ม (หัวใจ)
+        document.getElementById('start-button').addEventListener('click', function() {
+            showPage('page2');
+            startFireworks(); // เริ่มยิงพลุ
+        });
+
+        // ปุ่มถัดไป (หน้า 2)
+        document.getElementById('next-button').addEventListener('click', function() {
+            showPage('page3');
+            startFallingHearts(); // เริ่มฝนหัวใจ
+        });
+
+        // --- Script สำหรับการ์ดพลิก ---
+        document.getElementById('birthdayCard').addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+
+        // --- Script สำหรับฝนหัวใจ ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's'; // 2-5 วินาที
+            heart.innerText = ['❤️', '💖', '💗', '💕'][Math.floor(Math.random() * 4)];
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000); // ลบหัวใจออกเมื่อตกถึงพื้น
+        }
+
+        function startFallingHearts() {
+            // ป้องกันการเริ่มซ้ำซ้อน
+            if (!heartsInterval) { 
+                heartsInterval = setInterval(createHeart, 300);
+            }
+        }
+
+
+        // --- Script สำหรับพลุ (Fireworks) ---
+        window.requestAnimFrame = (function() {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                function(callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+        })();
+
+        var canvas = document.getElementById('fireworks-canvas');
+        var ctx = canvas.getContext('2d');
+        var cw = window.innerWidth;
+        var ch = window.innerHeight;
+        canvas.width = cw;
+        canvas.height = ch;
+
+        var fireworks = [];
+        var particles = [];
+        var hue = 120;
+        var limiterTotal = 5;
+        var limiterTick = 0;
+        var timerTotal = 80;
+        var timerTick = 0;
+        var isFireworksRunning = false;
+
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        function calculateDistance(p1x, p1y, p2x, p2y) {
+            var xDistance = p1x - p2x,
+                yDistance = p1y - p2y;
+            return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+        }
+
+        function Firework(sx, sy, tx, ty) {
+            this.x = sx; this.y = sy; this.sx = sx; this.sy = sy; this.tx = tx; this.ty = ty;
+            this.distanceToTarget = calculateDistance(sx, sy, tx, ty);
+            this.distanceTraveled = 0;
+            this.coordinates = [];
+            this.coordinateCount = 3;
+            while (this.coordinateCount--) { this.coordinates.push([this.x, this.y]); }
+            this.angle = Math.atan2(ty - sy, tx - sx);
+            this.speed = 2; this.acceleration = 1.05;
+            this.brightness = random(50, 70);
+            this.targetRadius = 1;
+        }
+
+        Firework.prototype.update = function(index) {
+            this.coordinates.pop();
+            this.coordinates.unshift([this.x, this.y]);
+            if (this.targetRadius < 8) { this.targetRadius += 0.3; } else { this.targetRadius = 1; }
+            this.speed *= this.acceleration;
+            var vx = Math.cos(this.angle) * this.speed,
+                vy = Math.sin(this.angle) * this.speed;
+            this.distanceTraveled = calculateDistance(this.sx, this.sy, this.x + vx, this.y + vy);
+            if (this.distanceTraveled >= this.distanceToTarget) {
+                createParticles(this.tx, this.ty);
+                fireworks.splice(index, 1);
+            } else {
+                this.x += vx; this.y += vy;
+            }
+        }
+
+        Firework.prototype.draw = function() {
+            ctx.beginPath();
+            ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+            ctx.lineTo(this.x, this.y);
+            ctx.strokeStyle = 'hsl(' + hue + ', 100%, ' + this.brightness + '%)';
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(this.tx, this.ty, this.targetRadius, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+
+        function Particle(x, y) {
+            this.x = x; this.y = y; this.coordinates = [];
+            this.coordinateCount = 5;
+            while (this.coordinateCount--) { this.coordinates.push([this.x, this.y]); }
+            this.angle = random(0, Math.PI * 2);
+            this.speed = random(1, 10);
+            this.friction = 0.95; this.gravity = 1;
+            this.hue = random(hue - 20, hue + 20);
+            this.brightness = random(50, 80);
+            this.alpha = 1; this.decay = random(0.015, 0.03);
+        }
+
+        Particle.prototype.update = function(index) {
+            this.coordinates.pop();
+            this.coordinates.unshift([this.x, this.y]);
+            this.speed *= this.friction;
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed + this.gravity;
+            this.alpha -= this.decay;
+            if (this.alpha <= this.decay) { particles.splice(index, 1); }
+        }
+
+        Particle.prototype.draw = function() {
+            ctx.beginPath();
+            ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+            ctx.lineTo(this.x, this.y);
+            ctx.strokeStyle = 'hsla(' + this.hue + ', 100%, ' + this.brightness + '%, ' + this.alpha + ')';
+            ctx.stroke();
+        }
+
+        function createParticles(x, y) {
+            var particleCount = 30;
+            while (particleCount--) { particles.push(new Particle(x, y)); }
+        }
+
+        function loop() {
+            fireworksLoop = requestAnimFrame(loop); // เก็บ loop ไว้
+            hue += 0.5;
+            
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.fillRect(0, 0, cw, ch);
+            ctx.globalCompositeOperation = 'lighter';
+
+            var i = fireworks.length;
+            while (i--) { fireworks[i].draw(); fireworks[i].update(i); }
+            var i = particles.length;
+            while (i--) { particles[i].draw(); particles[i].update(i); }
+
+            if (timerTick >= timerTotal) {
+                if (fireworks.length < limiterTotal) {
+                    fireworks.push(new Firework(cw / 2, ch, random(0, cw), random(0, ch / 2)));
+                }
+                timerTick = 0;
+            } else {
+                timerTick++;
+            }
+        }
+        
+        function startFireworks() {
+            if (!isFireworksRunning) {
+                isFireworksRunning = true;
+                loop(); // เริ่มการวนลูปพลุ
+            }
+        }
+
+        window.addEventListener('resize', function() {
+            cw = window.innerWidth;
+            ch = window.innerHeight;
+            canvas.width = cw;
+            canvas.height = ch;
+        });
+
+    </script>
+</body>
+</html>
