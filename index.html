@@ -1,10 +1,11 @@
-HTML
-
+2610
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>สุขสันต์วันเกิดนะ ที่รัก!</title>
     <style>
         /* Import Google Fonts */
@@ -27,9 +28,8 @@ HTML
             100% { background-position: 0% 50%; }
         }
 
-        /* --- Page Control --- */
         .page {
-            display: none; /* ซ่อนทุกหน้าไว้ก่อน */
+            display: none;
             position: absolute;
             top: 0;
             left: 0;
@@ -40,6 +40,9 @@ HTML
             flex-direction: column;
             text-align: center;
             z-index: 10;
+            /* เพิ่ม padding เล็กน้อยเผื่อขอบจอมือถือ */
+            padding: 10px;
+            box-sizing: border-box; 
         }
         
         .page.active {
@@ -63,9 +66,7 @@ HTML
             animation: pulse 1.5s infinite;
             transition: transform 0.3s ease;
         }
-        .pulsing-heart:hover {
-            transform: scale(1.2);
-        }
+        .pulsing-heart:hover { transform: scale(1.2); }
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
@@ -79,7 +80,7 @@ HTML
         /* --- Page 2: Card --- */
         .glow-title {
             font-family: 'Pacifico', cursive;
-            font-size: 5rem;
+            font-size: 5rem; /* 5rem สำหรับจอใหญ่ */
             color: #fff;
             margin-bottom: 20px;
             text-shadow:
@@ -94,7 +95,9 @@ HTML
         
         .flip-card {
             background-color: transparent;
-            width: 350px;
+            /* === ปรับส่วนนี้ === */
+            width: 350px; /* ขนาดใหญ่สุด 350px */
+            max-width: 95vw; /* แต่ไม่เกิน 95% ของความกว้างจอ */
             height: 450px;
             perspective: 1000px;
             cursor: pointer;
@@ -132,6 +135,7 @@ HTML
             font-size: 2rem;
             color: #e73c7e;
             margin: 0;
+            padding: 0 10px; /* กันข้อความชิดขอบ */
         }
         .flip-card-front p {
             font-size: 1.2rem;
@@ -144,7 +148,7 @@ HTML
             background: #fff;
             color: #333;
             transform: rotateY(180deg);
-            padding: 30px;
+            padding: 20px; /* ลด padding ลงเล็กน้อยสำหรับมือถือ */
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -152,24 +156,24 @@ HTML
         }
         .flip-card-back img {
             width: 100%;
-            height: 200px;
+            height: 180px; /* ลดขนาดรูปเล็กน้อย */
             object-fit: cover;
             border-radius: 15px;
             margin-bottom: 15px;
         }
         .flip-card-back .message {
-            font-size: 1.1rem;
+            font-size: 1rem; /* ลดขนาด font ให้อ่านง่ายในมือถือ */
             line-height: 1.6;
             text-align: left;
             flex-grow: 1;
-            /* เพิ่มให้ scroll ได้ถ้าข้อความยาว */
             overflow-y: auto; 
+            width: 100%;
         }
         .flip-card-back .signature {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: #e73c7e;
-            margin-top: 15px;
+            margin-top: 10px;
             align-self: flex-end;
         }
         
@@ -194,7 +198,7 @@ HTML
 
         /* --- Page 3: Finale --- */
         .final-message {
-            font-size: 6rem;
+            font-size: 6rem; /* 6rem สำหรับจอใหญ่ */
             color: #fff;
             font-weight: 700;
             text-shadow: 0 0 20px rgba(0,0,0,0.5);
@@ -242,6 +246,30 @@ HTML
             }
         }
 
+        /* ===============================================
+          === นี่คือส่วนที่ 2 ที่เพิ่มเข้ามา (Media Query) ===
+          === โค้ดนี้จะทำงาน "เฉพาะ" จอเล็ก (มือถือ)   ===
+          ===============================================
+        */
+        @media (max-width: 600px) {
+            .glow-title {
+                font-size: 3rem; /* ลดขนาด HBD */
+                margin-top: 20px;
+                margin-bottom: 10px;
+            }
+
+            .final-message {
+                font-size: 3.5rem; /* ลดขนาด "รักที่สุดเลย" */
+                /* ทำให้คำไม่ตก */
+                word-wrap: break-word;
+                padding: 0 10px;
+            }
+
+            .flip-card {
+                height: 480px; /* เพิ่มความสูงการ์ดเล็กน้อยในมือถือ */
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -251,7 +279,7 @@ HTML
     <div id="hearts-container"></div>
 
     <div class="page active" id="page1">
-        <h1> 26 ตุลามาบรรจบ </h1>
+        <h1>26 ตุลามาบรรจบ</h1>
         <div id="start-button" class="pulsing-heart">❤️</div>
         <p>(แตะที่หัวใจสิ)</p>
     </div>
@@ -264,7 +292,7 @@ HTML
                 <div class="flip-card-front">
                     <div class="cake-icon">🎂</div>
                     
-                    <h2>เรียน คุณกัญณิกา </h2> <p>(แตะการ์ดเพื่อเปิดอ่าน 💖)</p>
+                    <h2>ถึง เรียน คุณกัญณิกา</h2> <p>(แตะที่การ์ดเพื่อเปิดอ่าน 💖)</p>
                 </div>
                 
                 <div class="flip-card-back">
@@ -281,7 +309,7 @@ HTML
     </div>
 
     <div class="page" id="page3">
-        <h1 class="final-message">รักที่สุดใน3ล้านโลก ❤️</h1>
+        <h1 class="final-message">รักที่สุดใน3ล้านโลก❤️</h1>
     </div>
 
 
@@ -291,10 +319,9 @@ HTML
         const page2 = document.getElementById('page2');
         const page3 = document.getElementById('page3');
         const heartsContainer = document.getElementById('hearts-container');
-        var fireworksLoop; // สร้างตัวแปรไว้เก็บ loop
-        var heartsInterval; // สร้างตัวแปรไว้เก็บ interval
+        var fireworksLoop; 
+        var heartsInterval; 
 
-        // ฟังก์ชันสำหรับเปลี่ยนหน้า
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -302,19 +329,16 @@ HTML
             document.getElementById(pageId).classList.add('active');
         }
 
-        // ปุ่มเริ่ม (หัวใจ)
         document.getElementById('start-button').addEventListener('click', function() {
             showPage('page2');
-            startFireworks(); // เริ่มยิงพลุ
+            startFireworks(); 
         });
 
-        // ปุ่มถัดไป (หน้า 2)
         document.getElementById('next-button').addEventListener('click', function() {
             showPage('page3');
-            startFallingHearts(); // เริ่มฝนหัวใจ
+            startFallingHearts(); 
         });
 
-        // --- Script สำหรับการ์ดพลิก ---
         document.getElementById('birthdayCard').addEventListener('click', function() {
             this.classList.toggle('active');
         });
@@ -324,17 +348,16 @@ HTML
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 2) + 's'; // 2-5 วินาที
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
             heart.innerText = ['❤️', '💖', '💗', '💕'][Math.floor(Math.random() * 4)];
             heartsContainer.appendChild(heart);
 
             setTimeout(() => {
                 heart.remove();
-            }, 5000); // ลบหัวใจออกเมื่อตกถึงพื้น
+            }, 5000); 
         }
 
         function startFallingHearts() {
-            // ป้องกันการเริ่มซ้ำซ้อน
             if (!heartsInterval) { 
                 heartsInterval = setInterval(createHeart, 300);
             }
@@ -453,7 +476,7 @@ HTML
         }
 
         function loop() {
-            fireworksLoop = requestAnimFrame(loop); // เก็บ loop ไว้
+            fireworksLoop = requestAnimFrame(loop); 
             hue += 0.5;
             
             ctx.globalCompositeOperation = 'destination-out';
@@ -479,7 +502,7 @@ HTML
         function startFireworks() {
             if (!isFireworksRunning) {
                 isFireworksRunning = true;
-                loop(); // เริ่มการวนลูปพลุ
+                loop(); 
             }
         }
 
